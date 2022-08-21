@@ -1,0 +1,11 @@
+{
+  "name": "brandnew",
+  "version": "1.0.0",
+  "description": "Complete Node.js guide",
+  "main": "file.js",
+  "scripts": {
+    "test": "node file.js"
+  },
+  "author": "Reda amalli",
+  "license": "ISC"
+}
