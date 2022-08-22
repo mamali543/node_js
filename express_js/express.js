@@ -7,6 +7,9 @@ const  bodyparser = require('body-parser');
 //this will initialize a new object,
 // where expressjs, the framework will store and manage a lot of things for us behind the scenes
 const app = express();
+
+const adminRouter = require('./routes/admmin');
+const shopRouter = require('./routes/shop');
 //you can pass app as a requesthandler to createserver but it will'not handle any request,
 // but it sets up a certain way 
 //of handling incoming requests that defines
@@ -21,27 +24,19 @@ const app = express();
 
 app.use(bodyparser.urlencoded({extended: false})); //i pass the configue option here
 
-app.use( '/add-product', (req, res, next) => {
-    res.send('<form action="/product" method="POST"><input type="text" name="title"></input><button type="submit">send</button></form>');
-    //next(); // this allows our request to continue to the next middleware in line
-});
+//we can add a segment as a filter before the Router
+app.use(adminRouter);
+app.use(shopRouter);
 
-app.use( '/product', (req, res, next) => {
-    console.log(req.body);
-    res.redirect('/');
-    //next(); // this allows our request to continue to the next middleware in line
-});
+//add a 404 error page
 
-app.use('/', (req, res, next) => {
-    res.send('<h1>hello world1!</h1>');
-});
+app.use((req, res, next) => {
+    res.status(404).send('<html><h1>Page not Found</h1></html>')
+})
 
 //app.post() and app.get()  they filter if it's a get request or a post request
 
-
-
 // var server  = http.createServer(app);
-
-
 // server.listen(5000);
+
 app.listen(3000);
