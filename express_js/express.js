@@ -4,12 +4,14 @@
 const  express = require('express');
 const  bodyparser = require('body-parser');
 
+const path  = require('path');
+
 //this will initialize a new object,
 // where expressjs, the framework will store and manage a lot of things for us behind the scenes
 const app = express();
 
-const adminRouter = require('./routes/admmin');
 const shopRouter = require('./routes/shop');
+const adminRouter = require('./routes/admin');
 //you can pass app as a requesthandler to createserver but it will'not handle any request,
 // but it sets up a certain way 
 //of handling incoming requests that defines
@@ -31,7 +33,7 @@ app.use(shopRouter);
 //add a 404 error page
 
 app.use((req, res, next) => {
-    res.status(404).send('<html><h1>Page not Found</h1></html>')
+    res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
 })
 
 //app.post() and app.get()  they filter if it's a get request or a post request
