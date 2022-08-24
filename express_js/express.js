@@ -26,6 +26,9 @@ const adminRouter = require('./routes/admin');
 
 app.use(bodyparser.urlencoded({extended: false})); //i pass the configue option here
 
+
+//link css files
+app.use(express.static(path.join(__dirname, 'public')));
 //we can add a segment as a filter before the Router
 app.use(adminRouter);
 app.use(shopRouter);
