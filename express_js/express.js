@@ -10,8 +10,13 @@ const path  = require('path');
 // where expressjs, the framework will store and manage a lot of things for us behind the scenes
 const app = express();
 
+//here we tell express that we got a templating engine that is express conforming and use it to render dynamique tamplates
+//we do that after we created our express app, we set a global configuration value by app.set it allows us to set any values globaly on our express application
+
+app.set('view engine', 'pug'); //we're telling express that we want to compile dynamic templates with the pug engine
+app.set('views');   //and where to find this templates
 const shopRouter = require('./routes/shop');
-const adminRouter = require('./routes/admin');
+const adminData = require('./routes/admin');
 //you can pass app as a requesthandler to createserver but it will'not handle any request,
 // but it sets up a certain way 
 //of handling incoming requests that defines
@@ -30,7 +35,7 @@ app.use(bodyparser.urlencoded({extended: false})); //i pass the configue option 
 //link css files
 app.use(express.static(path.join(__dirname, 'public')));
 //we can add a segment as a filter before the Router
-app.use(adminRouter.route);
+app.use(adminData.route);
 app.use(shopRouter);
 
 //add a 404 error page
