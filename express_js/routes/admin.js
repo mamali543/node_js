@@ -9,8 +9,8 @@ const rootDir = require('../util/path.js');
 const product = [];
 
 router.get( '/add-product', (req, res, next) => {
-    res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
-    // res.render('add-product', {adminTitle: 'Add Product'});
+    // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
+    res.render('add-product', {adminTitle: 'Add Product', path: 'addproduct'});
     //next(); // this allows our request to continue to the next middleware in line
 });
 

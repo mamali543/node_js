@@ -42,7 +42,7 @@ app.use(shopRouter);
 
 app.use((req, res, next) => {
     // res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-    res.status(404).render('404', {noTitle: 'Page Not Found'});
+    res.status(404).render('404', {noTitle: 'Page Not Found', path: '404'});
 });
 
 //app.post() and app.get()  they filter if it's a get request or a post request
