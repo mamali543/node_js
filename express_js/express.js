@@ -13,7 +13,7 @@ const app = express();
 //here we tell express that we got a templating engine that is express conforming and use it to render dynamique tamplates
 //we do that after we created our express app, we set a global configuration value by app.set it allows us to set any values globaly on our express application
 
-app.set('view engine', 'pug'); //we're telling express that we want to compile dynamic templates with the pug engine
+app.set('view engine', 'ejs'); //we're telling express that we want to compile dynamic templates with the pug engine
 app.set('views');   //and where to find this templates
 const shopRouter = require('./routes/shop');
 const adminData = require('./routes/admin');
@@ -42,7 +42,7 @@ app.use(shopRouter);
 
 app.use((req, res, next) => {
     // res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-    res.status(404).render('404', {noTitle: 'Page Not Found', path: '404'});
+    res.status(404).render('404', {pageTitle: 'Page Not Found', path: '404'});
 });
 
 //app.post() and app.get()  they filter if it's a get request or a post request
