@@ -16,7 +16,9 @@ const app = express();
 app.set('view engine', 'ejs'); //we're telling express that we want to compile dynamic templates with the pug engine
 app.set('views');   //and where to find this templates
 const shopRouter = require('./routes/shop');
-const adminData = require('./routes/admin');
+const adminRouter = require('./routes/admin');
+
+const productController = require('./controllers/products');
 //you can pass app as a requesthandler to createserver but it will'not handle any request,
 // but it sets up a certain way 
 //of handling incoming requests that defines
@@ -35,15 +37,12 @@ app.use(bodyparser.urlencoded({extended: false})); //i pass the configue option 
 //link css files
 app.use(express.static(path.join(__dirname, 'public')));
 //we can add a segment as a filter before the Router
-app.use(adminData.route);
+app.use(adminRouter);
 app.use(shopRouter);
 
 //add a 404 error page
 
-app.use((req, res, next) => {
-    // res.status(404).sendFile(path.join(__dirname, 'views', '404.html'));
-    res.status(404).render('404', {pageTitle: 'Page Not Found', path: '404'});
-});
+app.use(productController.get404page);
 
 //app.post() and app.get()  they filter if it's a get request or a post request
 

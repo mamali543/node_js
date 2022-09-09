@@ -1,0 +1,19 @@
+
+<%- include('./layouts/head.ejs')%>
+</head>
+<body>
+
+    <main>
+        <% for (let product of s) { %>
+            <article>
+                <header>
+                    <h1><%= product.title %></h1>
+                </header>
+                <div >
+                    <img src="https://cdn.pixabay.com/photo/2016/03/31/20/51/book-1296045_960_720.png" alt="A Book">
+                </div>
+            </article>
+        <% } %>
+    </main>
+    
+<%- include('./layouts/end.ejs') %>
