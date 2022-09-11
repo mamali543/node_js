@@ -18,7 +18,7 @@ app.set('views');   //and where to find this templates
 const shopRouter = require('./routes/shop');
 const adminRouter = require('./routes/admin');
 
-const productController = require('./controllers/products');
+const productController = require('./controllers/err');
 //you can pass app as a requesthandler to createserver but it will'not handle any request,
 // but it sets up a certain way 
 //of handling incoming requests that defines

@@ -1,9 +1,11 @@
+/*models sreves the purpose of representing our data and  of managaning our data, svaing it fetching it also updating it
+it'd the model which is responsible for your data, it contains all the data related logic*/
+
 // const product = [];
 const e = require('express');
 const fs = require('fs');
 
 const path = require('path');
-const { createBrotliCompress } = require('zlib');
 const rootDir = require('../util/path');
 
 
@@ -18,24 +20,27 @@ const getProductFromFile = (cb) => {
 }
 
 module.exports = class Product{
-    constructor(t)
+    constructor(title, imageUrl, description, price)
     {
-        this.title = t;
+        this.title = title;
+        this.imageUrl = imageUrl;
+        this.description = description;
+        this.price = price;
     }
 
-save()
-{
-    getProductFromFile((product) => {
-        const p = path.join(rootDir, 'data', 'product.json');
-        product.push(this);
-        fs.writeFile(p,  JSON.stringify(product), (err) => {
-            console.log(err);
+    save()
+    {
+        getProductFromFile((product) => {
+            const p = path.join(rootDir, 'data', 'product.json');
+            product.push(this);
+            fs.writeFile(p,  JSON.stringify(product), (err) => {
+                console.log(err);
+            });
         });
-    });
-}
+    }
 
-static fetchAll(cb)
-{
-    getProductFromFile(cb);
-}
-}
+    static fetchAll(cb)
+    {
+        getProductFromFile(cb);
+    }
+};
