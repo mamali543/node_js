@@ -30,6 +30,7 @@ module.exports = class Product{
 
     save()
     {
+        this.id = Math.random().toString();
         getProductFromFile((product) => {
             const p = path.join(rootDir, 'data', 'product.json');
             product.push(this);
@@ -43,5 +44,14 @@ module.exports = class Product{
     static fetchAll(cb)
     {
         getProductFromFile(cb);
+    }
+
+    static async  fetchProduct(id, cb)
+    {
+        const p = getProductFromFile(cb);
+        
+        console.table(p);
+
+        return(p);
     }
 };
