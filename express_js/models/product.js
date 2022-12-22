@@ -33,9 +33,10 @@ module.exports = class Product{
         getProductFromFile((product) => {
             const p = path.join(rootDir, 'data', 'product.json');
             product.push(this);
+            console.log(product)
             fs.writeFile(p,  JSON.stringify(product), (err) => {
                 console.log(err);
-            });
+            }); 
         });
     }
 

@@ -1,0 +1,106 @@
+*online shop
+
+*Nodejs is a server side tecknologie
+
+*Nodejs allows us to leveraging from the file system functionality (or module) offered by NodeJs
+
+*Nodejs is javaScript runtime, what's that means?
+ -it allows you to run javascript not just in the browser but anywhere else like normal progaming language(it allows you to run javascript in your computer),
+ in this course we'll use NodeJs to run it on a server to write server side code
+
+*How does this work technically? 
+ -nodejs uses V8 the javascript engine built by google that runs js in the browser, what's this engine is doing?
+  it takes javaScript code and compiles it to machine code , v8 is written in c++, but nodejs takes that v8 engine which is writte with c++
+  and adds to it certain features like for example working with your local file system (opening, reading , deleting files..), these are things
+  that aren't possible in the browser
+
+*You can use node in your terminal and one way of using it is to enter interactive mode NodeJs is offering you so called REPL,
+ you enter this interactive mode by simply executing node as a command and there you can run some node commands, you can use it as asimple calculator,
+ and you could run some javascript  code in there.
+
+*how to execute a js file with nodejs?
+ node before the file.js
+
+*what's a server?
+ -some computer running in the Internet which has the IP adresse associated with the domain name requested
+
+*On the server, we typically do tasks that we can't do from inside the browser for performance and security reasons,We connect to databases for example
+ to fetch and store data,We do user authentication which we obviously can only do on a place the user can't access to make it more secure and avoid it being hacked,
+ We do it for input validation to see if a user entered a correct e-mail address,the browser can always be tricked,users can even edit their browser side code,
+ You can open the developer tools and start working on that page you're on but the server is of course sheltered from that,the user can't access it,
+ And in general, we have our business logic on the server. Everything our user shouldn't see which takes too much time to run in the browser,
+ where we obviously want to deliver a fast user experience or anything of that kind and that is where we use nodejs.
+
+*with nodejs you don't just write the code that is running on your server,you also write the server yourself,so the code that takes the incoming requests and routes 
+ them to your other code.
+
+*In PHP,you have extra tools like apache or nginx which run the servers which listen to incoming requests and then execute your php code,
+ here nodejs does both It does that listening and it then also does whatever you want to do in your code.
+
+*NodeJs Role in WebDevelopement:
+    -Run server(Create server and listen to incoming requests)
+    -Logic business(Handle request, validate Input, connect to databases)
+    -Responses(Return responses, HTML, JSON, ....)
+
+*what's npm?:
+    -npm stands for node package manager and it is installed together with nodejs
+    -we also use npm to install some additional third party packages to our project, so packages that are not included in nodes core,
+     so not part of nodes core modules but we can also use npm to initialize a so-called node project or to add some extra features.
+
+*with npm inti what you get is the package.json file with the configurations you just set up and 
+ you can of course edit them there too.and it is using the json format which is a special kind of data format which basically looks a
+ lot like javascript objects and it is pretty much is based on that, there is one important thing to understand though,
+ the keys are always put between double quotation marks and so are the values, except for numbers or arrays or true or false which are not.
+
+*this package.json you got it is basically a configuration file for your project.
+
+*we can install third party packages because a typical node project looks like that. You have your local
+ project with your code obviously and you use a lot of core node packages like the fs package or the http package but often this does not 
+ suffice ,you can install one big third package actually because you typically have such dependencies third party packages.
+ So you want to use some functionalities some code which you didn't write on your own but which is also not included into nodejs.
+ Packages could help you with parsing incoming requests, validating user input,anything of that kind.to use express, body parser,
+ and there are thousands of packages available that offer all kinds of utilities you can add to your projects
+ These packages are available through the npm repository, that is a cloud package repository where all these packages live
+ and you can conveniently install and manage them via npm.
+
+*you can define how the packege should be installed because packages which you install can be divided into development packages, 
+ so packages which mostly help you during development and production dependencies, so packages that helps you for the app as it's running
+ on a server(it will be an integral part of the application), for example nodemon would be a development dependency because we only use it during the development process,
+ once we install our app on a real server we don't need it there. The real server which is running somewhere in the Internet of course
+ shouldn't restart and it also doesn't have to because we'll not change its code dynamically. And you can basically tell npm which kind
+ of dependency this is,this does not make a huge difference and you can omit the setting but it helps you understand which package is used for what.
+
+*concepts about available Node.js features and how to unlock them:
+    You can basically differentiate between:
+        Global features: Keywords like const or function but also some global objects like process
+        Core Node.js Modules: Examples would be the file-system module ("fs"), the path module ("path") or the Http module ("http")
+        Third-party Modules: Installed via npm install - you can add any kind of feature to your app via this way
+
+*The kind of error you often get or you sometimes getting your programs:
+    -Syntax Error
+    -Runtime Error
+    -Logical Error
+
+*framework:
+    -helper functions, tools and rules that help you structure and build your application
+
+*when you work with arrays to store data because it's a bad habbit:
+    -when you update data from your browser and you made a request from another browser or machine you find that this data
+    it is actually data which is inherent to our node server as it is running and therefore, it's shared across all users.
+    -it is better to find a technique to share data in memory, in the node app across different requests but only
+    for one and the same user and not across users because now we have shared data across requests and across users(when working with arrays)
+*to put dynamiq content to your html pages you can work with templating engines
+
+*what's templating engines?
+    -you have your html-ish template and structure with some blanks in there and placeholders
+    and then you have your node express content in your app like our dummy array,the templating engines understands a certain syntax for which
+    it scans your html-ish template and then replaces placeholders and certain snippets with real html content but that content is generated
+    on the fly, on the server by the templating engines
+
+*What's MVC?
+    -It's all about separation of concerns(preoccupations), so making sure that different parts of your code do different things and you clearly
+    know which part is responsible for what
+    -MVC stands for Models Views Controller
+    -Models: represent your dat in your code
+    -views: what user sees
+    -CONTROLLERS:connecting your model and your views, it's the middleman,it is then the thing defining with which model to work and which view to render.

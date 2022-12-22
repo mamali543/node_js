@@ -1,7 +1,11 @@
+/*the controller should do everything that needs to be done to connect your model and the view, it can mean rhaat through your view, through your foorm some data was sent to your node express application and you need to send taht to the model to save it
+or it can of course mean that your fetchnig data from your model and send that into a view which is then returned to the user*/
 const Product = require('../models/product');
 
 exports.getAddProduct = (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'add-product.html'));
+    /*render method is provided by expressjs and it will use the default templating engine which is why we had
+    to define it here,it will use that default templating engine and then return that template.*/
     res.render('admin/add-product', {pageTitle: 'Add Product', path: 'addproduct'});
     //next(); // this allows our request to continue to the next middleware in line
 };
