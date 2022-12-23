@@ -10,11 +10,11 @@ exports.getProduct = (req, res, next) => {
 
 exports.getProductById = async (req, res, next) => {
     const id = req.params.productId;
-    Product.fetchProduct((produit) => {
+        Product.fetchProduct(id, (produit) => {
+            res.render('shop/product-detail', {prods: produit, pageTitle: 'Product-detail', path: 'productdetail'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    });
 
-        console.log(produit);
-    })
-    res.redirect('/');
+    // res.redirect('/');
 }
 
 exports.getIndex = (req, res, next) => {

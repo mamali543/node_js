@@ -46,12 +46,11 @@ module.exports = class Product{
         getProductFromFile(cb);
     }
 
-    static async  fetchProduct(id, cb)
+    static fetchProduct(id, cb)
     {
-        const p = getProductFromFile(cb);
-        
-        console.table(p);
-
-        return(p);
+        getProductFromFile(prods => {
+            const product = prods.find(prod => prod.id === id);
+            cb(product);
+        });
     }
 };
