@@ -1,5 +1,6 @@
 const { fetchProduct } = require('../models/product');
 const Product = require('../models/product');
+const Cart = require('../models/cart');
 
 exports.getProduct = (req, res, next) => {
     Product.fetchAll((produit) => {
@@ -8,7 +9,7 @@ exports.getProduct = (req, res, next) => {
     });
 };
 
-exports.getProductById = async (req, res, next) => {
+exports.getProductById =  (req, res, next) => {
     const id = req.params.productId;
         Product.fetchProduct(id, (produit) => {
             res.render('shop/product-detail', {prods: produit, pageTitle: 'Product-detail', path: 'productdetail'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
@@ -16,6 +17,14 @@ exports.getProductById = async (req, res, next) => {
 
     // res.redirect('/');
 }
+
+exports.postCart = (req, res, next) => {
+    const productId = req.body.productId;
+    Product.fetchProduct(productId, (produit) => {
+        Cart.addProduct(productId, produit.price);
+    })
+    res.redirect('/cart');
+};
 
 exports.getIndex = (req, res, next) => {
     Product.fetchAll((produit) => {

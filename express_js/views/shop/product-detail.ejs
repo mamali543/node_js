@@ -9,8 +9,6 @@
                 <hr>
                 <img src="<%=prods.imageUrl%>" alt="">
                 <h2><%=prods.description%></h2>
-                <form action="/card" method="post">
-                    <button class="btn" type="submit">Add to card</button>
-                </form>
+                <%- include('../ejslayouts/add-to-card.ejs')%>
             </main>
             <%- include('../ejslayouts/end.ejs') %>
