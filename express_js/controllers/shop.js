@@ -20,11 +20,13 @@ exports.getProductById =  (req, res, next) => {
 
 exports.postCart = (req, res, next) => {
     const productId = req.body.productId;
+    console.log('>>>productId >>>: ', req.body);
     Product.fetchProduct(productId, (produit) => {
         Cart.addProduct(productId, produit.price);
     })
     res.redirect('/cart');
 };
+
 
 exports.getIndex = (req, res, next) => {
     Product.fetchAll((produit) => {

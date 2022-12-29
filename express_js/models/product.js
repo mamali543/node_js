@@ -27,11 +27,11 @@ module.exports = class Product{
         this.imageUrl = imageUrl;
         this.description = description;
         this.price = price;
+        this.id = Math.random().toString();
     }
 
     save()
     {
-        this.id = Math.random().toString();
         getProductFromFile((product) => {
             
             product.push(this);
@@ -51,7 +51,7 @@ module.exports = class Product{
     {
         getProductFromFile(prods => {
             const product = prods.find(prod => prod.id === id);
-            console.log(product.price);
+            console.log('>>Fetch Prouct Price >>>: ',product.price);
             cb(product);
         });
     }
