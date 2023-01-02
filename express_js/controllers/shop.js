@@ -14,13 +14,11 @@ exports.getProductById =  (req, res, next) => {
         Product.fetchProduct(id, (produit) => {
             res.render('shop/product-detail', {prods: produit, pageTitle: 'Product-detail', path: 'productdetail'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
     });
-
     // res.redirect('/');
 }
 
 exports.postCart = (req, res, next) => {
     const productId = req.body.productId;
-    console.log('>>>productId >>>: ', req.body);
     Product.fetchProduct(productId, (produit) => {
         Cart.addProduct(productId, produit.price);
     })
@@ -40,7 +38,6 @@ exports.getCart = (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
     res.render('shop/cart', {prods: produit, pageTitle: 'Cart', path: 'cart'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
     });
-
 };
 
 exports.getOrders = (req, res, next) => {
@@ -48,7 +45,6 @@ exports.getOrders = (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
     res.render('shop/orders', {prods: produit, pageTitle: 'Orders', path: 'orders'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
     });
-
 };
 
 exports.getCheckout = (req, res, next) => {
@@ -56,7 +52,6 @@ exports.getCheckout = (req, res, next) => {
     // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
     res.render('shop/Checkout', {prods: produit, pageTitle: 'Checkout', path: 'checkout'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
     });
-
 };
 
 // exports.get404page = (req, res, next) => {
