@@ -27,12 +27,17 @@ module.exports = class Product{
         this.imageUrl = imageUrl;
         this.description = description;
         this.price = price;
-        this.id = Math.random().toString();
     }
-
+    
     save()
     {
+        this.id = Math.random().toString();
         getProductFromFile((product) => {
+            if (this.id) {
+                const existingProductIndex = product.findIndex(prod => prod.id === this.id)
+                const updatedProduct = [...product];
+                updatedProduct[existingProductIndex] = this;
+            }
             
             product.push(this);
             console.log(product)
