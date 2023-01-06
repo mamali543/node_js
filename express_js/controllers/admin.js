@@ -36,7 +36,6 @@ exports.PostAddProduct = (req, res, next) => {
     const imageUrl = req.body.imageUrl;
     const price = req.body.price;
     const description = req.body.description;
-    // const id = req.body.id;
     const product = new Product(null, title, imageUrl, description, price);
     product.save();
     res.redirect('/');
@@ -54,13 +53,4 @@ exports.PostEditProduct = (req, res, next) => {
     console.log('here is the product: ', product);
     product.save();
     res.redirect('/product');
-    // const title = req.body.title;
-    // const imageUrl = req.body.imageUrl;
-    // const price = req.body.price;
-    // const description = req.body.description;
-    // // const id = req.body.id;
-    // const product = new Product(title, imageUrl, description, price);
-    // product.save();
-    // res.redirect('/');
-    //next(); // this allows our request to continue to the next middleware in line
 };

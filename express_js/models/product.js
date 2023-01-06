@@ -29,7 +29,7 @@ module.exports = class Product{
         this.description = description;
         this.price = price;
     }
-    
+
     save()
     {
         getProductFromFile((product) => {
