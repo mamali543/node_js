@@ -30,6 +30,11 @@ exports.getProductlist = (req, res, next) => {
     });
 };
 
+exports.PostDeleteProduct = (req, res, next) => {
+    let id = req.body.prodId;
+    Product.delete(id);
+    res.redirect('/');
+};
 
 exports.PostAddProduct = (req, res, next) => {
     const title = req.body.title;

@@ -6,12 +6,12 @@ const e = require('express');
 const fs = require('fs');
 
 const path = require('path');
+const Cart = require('./cart');
 const rootDir = require('../util/path');
 
 const p = path.join(rootDir, 'data', 'product.json');
 
 const getProductFromFile = (cb) => {
-    
     fs.readFile(p, (err, fileContent) => {
         if (!err && fileContent.length > 0)
             return cb(JSON.parse(fileContent));
@@ -19,7 +19,6 @@ const getProductFromFile = (cb) => {
             cb([]);
     });
 }
-
 module.exports = class Product{
     constructor(id, title, imageUrl, description, price)
     {
@@ -55,6 +54,23 @@ module.exports = class Product{
     static fetchAll(cb)
     {
         getProductFromFile(cb);
+    }
+
+    static delete(id)
+    {
+        getProductFromFile(prods => {
+            let produit = prods.find(prod => prod.id === id);
+            // const prodIndex = prods.findIndex(prod => prod.id === id);
+            // console.log('>>>>: ',prodIndex);
+            // prods.splice(prodIndex, 1);
+            // console.log('prods>>: ',prods);
+            const updatedProduct = prods.filter(product => id != product.id)
+            fs.writeFile(p,  JSON.stringify(updatedProduct), (err) => {
+                if (!err)
+                    Cart.deleteItem(id, produit.price);
+                console.log(err);
+            }); 
+        });
     }
 
     static fetchProduct(id, cb)

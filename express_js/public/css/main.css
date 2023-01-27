@@ -186,8 +186,8 @@ form {
   font: inherit;
   border: 1px solid #00695c;
   color: #00695c;
-  background: white;
-  border-radius: 3px;
+  background: rgb(246, 248, 245);
+  border-radius: 20px;
   cursor: pointer;
 }
 
