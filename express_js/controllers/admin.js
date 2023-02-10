@@ -33,6 +33,7 @@ exports.getProductlist = (req, res, next) => {
 exports.PostDeleteProduct = (req, res, next) => {
     let id = req.body.prodId;
     Product.delete(id);
+    console.log("what's happening? ");
     res.redirect('/');
 };
 

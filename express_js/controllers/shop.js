@@ -26,6 +26,16 @@ exports.postCart = (req, res, next) => {
 };
 
 
+exports.deleteCardItem = (req, res, next) => {
+    let id = req.body.prodId;
+    Product.fetchProduct(id, (product) => {
+        let price = product.price;
+        console.log("here is the price >>> : ", price)
+        Cart.deleteItem(id, price);
+    })
+    res.redirect('/');
+};
+
 exports.getIndex = (req, res, next) => {
     Product.fetchAll((produit) => {
         // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
@@ -34,10 +44,20 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-    Product.fetchAll((produit) => {
-    // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-    res.render('shop/cart', {prods: produit, pageTitle: 'Cart', path: 'cart'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
-    });
+    Cart.getCardProduct((card) => {
+        Product.fetchAll((products) => {
+            const cartItems = [];
+            for (prod of products)
+            {
+                const productData = card.products.find(produit => produit.id === prod.id);
+                if (productData)
+                {
+                    cartItems.push({productData: prod, qty: productData.qty});
+                }
+            }
+            res.render('shop/cart', {prods: cartItems, pageTitle: 'Cart', path: 'cart'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+        })
+    })
 };
 
 exports.getOrders = (req, res, next) => {

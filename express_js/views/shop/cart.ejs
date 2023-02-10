@@ -3,4 +3,21 @@
 
     <body>
         <%- include('../ejslayouts/navgaation.ejs') %>
+        <main>
+            <% if (prods.length > 0) { %> 
+                <ul>
+                    <% for (let prod of prods) { %> 
+                      <li><%=prod.productData.title%> (<%=prod.qty%>)</li>
+                      <form action="delete-card" method="post">
+                        <button class="btn" type="submit">delete</button>
+                        <input type="hidden" name="prodId" value="<%=prod.productData.id%>">
+                      </form>
+                    <%}%>
+                </ul>
+            <%}
+            else 
+            { %>
+                <h1>No products Found</h1>
+            <%}%>
+        </main>
         <%- include('../ejslayouts/end.ejs') %>

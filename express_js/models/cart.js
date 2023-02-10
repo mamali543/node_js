@@ -40,12 +40,33 @@ module.exports = class Cart {
             if (!err)
             {
                 let card = JSON.parse(fileContent);
-                console.log('Card >>> : ', card);
                 let produit = card.products.find(prod => prod.id === id);
-                console.log('ProductIndex >>> : ',produit);
+                if (!produit)
+                    return ;
                 let updatedPrice = card.totalPrice - (produit.qty * price);
-                console.log('NewPrice >>> : ',updatedPrice);
+                const updatedCard = {...card};
+                updatedCard.products = card.products.filter(prod => prod.id !== id);
+                updatedCard.totalPrice = updatedPrice;
+                fs.writeFile(p, JSON.stringify(updatedCard), err =>{
+                    console.log(err);
+                })
             }
+            else
+            {
+                console.log(">>>>>: Item not found in Card  >>> : ")
+                return ;
+            }
+        });
+    }
+
+    static getCardProduct(cb)
+    {
+        fs.readFile(p, (err, fileContent) =>{
+            let cart = JSON.parse(fileContent);
+            if (err)
+                cb(null);
+            else
+                cb(cart);
         });
     }
 }

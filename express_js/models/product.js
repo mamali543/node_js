@@ -67,8 +67,14 @@ module.exports = class Product{
             const updatedProduct = prods.filter(product => id != product.id)
             fs.writeFile(p,  JSON.stringify(updatedProduct), (err) => {
                 if (!err)
+                {
+                    console.log(">>> no error found  >> ")
                     Cart.deleteItem(id, produit.price);
-                console.log(err);
+                    console.log(">>> no error found 2  >> ")
+
+                }
+                else
+                    console.log(err);
             }); 
         });
     }

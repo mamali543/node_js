@@ -109,3 +109,6 @@
 path in the url,we can put it as part of our request body instead.So back in the view,here I will add
 a hidden input again as we did it before in post requests where I set the value to product ID using
 ejs templating syntax and the name to product ID so that we can extract that information by that name.
+
+*Database is a specific program that allows you or that is
+built for storing data and for efficiently retrieving data too
