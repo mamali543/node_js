@@ -3,17 +3,28 @@ const Product = require('../models/product');
 const Cart = require('../models/cart');
 
 exports.getProduct = (req, res, next) => {
-    Product.fetchAll((produit) => {
-        // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-        res.render('shop/product-list', {prods: produit, pageTitle: 'Products', path: 'productlist'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    Product.findAll().then((products) => {
+        res.render('shop/product-list', {prods: products, pageTitle: 'All Products', path: 'productlist'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    }).catch((err) =>{
+        console.log(err);
     });
+    // Product.fetchAll().then(([rows, fieldData]) => {
+    //     console.log('rooows >>> : ', rows );
+    //     res.render('shop/product-list', {prods: rows, pageTitle: 'All Products', path: 'productlist'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    // }).catch()
 };
 
 exports.getProductById =  (req, res, next) => {
     const id = req.params.productId;
-        Product.fetchProduct(id, (produit) => {
-            res.render('shop/product-detail', {prods: produit, pageTitle: 'Product-detail', path: 'productdetail'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    Product.findByPk(id).then((product) => {
+        res.render('shop/product-detail', {prods: product, pageTitle: 'Product-detail', path: 'productdetail'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    }).catch((err) => {
+        console.log(err);
     });
+        // Product.fetchProduct(id).then(([result]) =>
+        // {
+        //     res.render('shop/product-detail', {prods: result[0], pageTitle: 'Product-detail', path: 'productdetail'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+        // }).catch((err) => console.log(err))
     // res.redirect('/');
 }
 
@@ -24,7 +35,6 @@ exports.postCart = (req, res, next) => {
     })
     res.redirect('/cart');
 };
-
 
 exports.deleteCardItem = (req, res, next) => {
     let id = req.body.prodId;
@@ -37,10 +47,17 @@ exports.deleteCardItem = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
-    Product.fetchAll((produit) => {
-        // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-        res.render('shop/index', {prods: produit, pageTitle: 'Shop', path: 'true'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    Product.findAll().then((products) => {
+        res.render('shop/index', {prods: products, pageTitle: 'Shop', path: 'true'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    }).catch((err) =>{
+        console.log(err);
     });
+    // Product.fetchAll().then(([rows, fieldData]) => {
+    //     console.log('rooows >>> : ', rows);
+    //     console.log('fieldData >>> : ', fieldData);
+    //     res.render('shop/index', {prods: rows, pageTitle: 'Shop', path: 'true'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    // }).catch()
+        // res.sendFile(path.join(rootDir, 'views', 'shop.html')););
 };
 
 exports.getCart = (req, res, next) => {
@@ -56,8 +73,8 @@ exports.getCart = (req, res, next) => {
                 }
             }
             res.render('shop/cart', {prods: cartItems, pageTitle: 'Cart', path: 'cart'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
-        })
-    })
+        });
+    });
 };
 
 exports.getOrders = (req, res, next) => {

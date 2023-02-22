@@ -16,7 +16,7 @@ exports.getEditProduct = (req, res, next) => {
         return res.redirect('/');
     let prodId = req.params.prodId;
     console.log('>>>>',prodId);
-    Product.fetchProduct(prodId, (produit) => {
+    Product.findByPk(prodId).then((produit) => {
         if (!produit)
             return res.redirect('/');
         res.render('admin/edit-product', {pageTitle: 'Edit Product', path: 'editproduct', editing: true, product: produit});
@@ -24,9 +24,12 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.getProductlist = (req, res, next) => {
-    Product.fetchAll((produit) => {
+    Product.findAll().then((products) =>
+    {
         // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
-        res.render('admin/product-list', {prods: produit, pageTitle: 'Admin Products', path: 'adminproducts'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+        res.render('admin/product-list', {prods: products, pageTitle: 'Admin Products', path: 'adminproducts'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    }).catch((err) => {
+        console.log(err);
     });
 };
 
@@ -38,13 +41,14 @@ exports.PostDeleteProduct = (req, res, next) => {
 };
 
 exports.PostAddProduct = (req, res, next) => {
-    const title = req.body.title;
-    const imageUrl = req.body.imageUrl;
-    const price = req.body.price;
-    const description = req.body.description;
-    const product = new Product(null, title, imageUrl, description, price);
-    product.save();
-    res.redirect('/');
+    Product.create({
+        title: req.body.title,
+        price: req.body.price,
+        imageUrl: req.body.imageUrl,
+        description: req.body.description
+    }).then((result) => {
+        res.redirect('/');
+    }).catch();
     //next(); // this allows our request to continue to the next middleware in line
 };
 
@@ -57,6 +61,12 @@ exports.PostEditProduct = (req, res, next) => {
     let updatedDescription = req.body.description;
     const product = new Product(id, updatedTitle,  updatedimgUrl,updatedDescription, updatedPrice);
     console.log('here is the product: ', product);
-    product.save();
-    res.redirect('/product');
+    product.save().then(() => {
+        res.redirect('/product');
+    }
+    ).catch((err) =>
+    {
+        console.log(err);
+    }
+    );
 };

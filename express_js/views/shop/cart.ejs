@@ -7,7 +7,7 @@
             <% if (prods.length > 0) { %> 
                 <ul>
                     <% for (let prod of prods) { %> 
-                      <li><%=prod.productData.title%> (<%=prod.qty%>)</li>
+                      <li><%=prod.productData.title%> (<%=prod.qty%>) the price is: <%=prod.productData.price%></li>
                       <form action="delete-card" method="post">
                         <button class="btn" type="submit">delete</button>
                         <input type="hidden" name="prodId" value="<%=prod.productData.id%>">
