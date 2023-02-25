@@ -47,6 +47,7 @@ exports.deleteCardItem = (req, res, next) => {
 };
 
 exports.getIndex = (req, res, next) => {
+    console.log('>>>> souhail is here >>> 2:');
     Product.findAll().then((products) => {
         res.render('shop/index', {prods: products, pageTitle: 'Shop', path: 'true'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
     }).catch((err) =>{
@@ -61,20 +62,21 @@ exports.getIndex = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-    Cart.getCardProduct((card) => {
-        Product.fetchAll((products) => {
-            const cartItems = [];
-            for (prod of products)
-            {
-                const productData = card.products.find(produit => produit.id === prod.id);
-                if (productData)
-                {
-                    cartItems.push({productData: prod, qty: productData.qty});
-                }
-            }
-            res.render('shop/cart', {prods: cartItems, pageTitle: 'Cart', path: 'cart'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
-        });
-    });
+    req.user.getCart().then().catch()
+    // Cart.getCardProduct((card) => {
+    //     Product.fetchAll((products) => {
+    //         const cartItems = [];
+    //         for (prod of products)
+    //         {
+    //             const productData = card.products.find(produit => produit.id === prod.id);
+    //             if (productData)
+    //             {
+    //                 cartItems.push({productData: prod, qty: productData.qty});
+    //             }
+    //         }
+    //         res.render('shop/cart', {prods: cartItems, pageTitle: 'Cart', path: 'cart'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
+    //     });
+    // });
 };
 
 exports.getOrders = (req, res, next) => {

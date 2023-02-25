@@ -15,8 +15,9 @@ exports.getEditProduct = (req, res, next) => {
     if (!e)
         return res.redirect('/');
     let prodId = req.params.prodId;
-    console.log('>>>>',prodId);
-    Product.findByPk(prodId).then((produit) => {
+    console.log('\x1b[33m >>>>'+ prodId + ' \x1b[0m');
+    req.user.getProducts({where: {id: prodId}}).then((products) => {
+        let produit  = products[0];
         if (!produit)
             return res.redirect('/');
         res.render('admin/edit-product', {pageTitle: 'Edit Product', path: 'editproduct', editing: true, product: produit});
@@ -24,7 +25,7 @@ exports.getEditProduct = (req, res, next) => {
 };
 
 exports.getProductlist = (req, res, next) => {
-    Product.findAll().then((products) =>
+    req.user.getProducts().then((products) =>
     {
         // res.sendFile(path.join(rootDir, 'views', 'shop.html'));
         res.render('admin/product-list', {prods: products, pageTitle: 'Admin Products', path: 'adminproducts'}) // this is provided by expressjs and it will use the default templating engine, and also the render method allows us to pas the data that should be added into our view (however as a javascript object wher we map it to a key name)
@@ -34,14 +35,23 @@ exports.getProductlist = (req, res, next) => {
 };
 
 exports.PostDeleteProduct = (req, res, next) => {
-    let id = req.body.prodId;
-    Product.delete(id);
-    console.log("what's happening? ");
-    res.redirect('/');
+    let prodId = req.body.prodId;
+    // Product.findByPk(id).then((product) => {
+    //     return (product.destroy())
+    // }).
+    req.user.getProducts({where: {id: prodId}})
+    .then((products) => {
+        products[0].destroy();
+    }).then((result) => {
+        console.log('\x1b[33m Item Deleted Succesfully \x1b[0m');
+        res.redirect('/product');
+    }).catch((err) => {
+        console.log(err);
+    });
 };
 
 exports.PostAddProduct = (req, res, next) => {
-    Product.create({
+    req.user.createProduct({
         title: req.body.title,
         price: req.body.price,
         imageUrl: req.body.imageUrl,
@@ -54,19 +64,16 @@ exports.PostAddProduct = (req, res, next) => {
 
 exports.PostEditProduct = (req, res, next) => {
     let id = req.body.prodId;
-    console.log('here is the id : ', id);
-    let updatedTitle = req.body.title;
-    let updatedPrice = req.body.price;
-    let updatedimgUrl = req.body.imageUrl;
-    let updatedDescription = req.body.description;
-    const product = new Product(id, updatedTitle,  updatedimgUrl,updatedDescription, updatedPrice);
-    console.log('here is the product: ', product);
-    product.save().then(() => {
-        res.redirect('/product');
-    }
-    ).catch((err) =>
-    {
+    Product.findByPk(id).then((product)=>{
+        product.title = req.body.title;
+        product.price = req.body.price;
+        product.imageUrl = req.body.imageUrl;
+        product.description = req.body.description;
+        return (product.save());
+    }).then((result) => {
+        res.redirect('/product')
+        console.log('\x1B[31 result >>>>>: ',result, 'background-color: red');
+    }).catch((err)=>{
         console.log(err);
-    }
-    );
+    });
 };
